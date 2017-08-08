@@ -17,17 +17,13 @@ def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id,
                      text="Hello, this bot can give you the weather. Just invoke it by "
                           "typing /weather <searchterm>, this will return the current weather.\n "
-                          "For best results, add a country name or code.\n"
+                          "For best results, add a country name or code to your searchterm, separated by a comma.\n"
                           "You can also use ZIP or postal codes in combination with a country.\n "
                           "You can also send a location.")
 
 
 def gen_w_string(currentweather):
-    w_string = ""
-    for j, i in enumerate(currentweather.w_desc):
-        if j > 0:
-            w_string += ", "
-        w_string += i
+    w_string = ", ".join(list(currentweather.w_desc))
     return w_string.capitalize()
 
 
