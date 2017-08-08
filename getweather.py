@@ -13,6 +13,8 @@ class API:
         self.success = None
 
     def get_weather(self, city, country):
+        print("city:", city, ", country:", country)
+
         apiresp = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&appid={self.apikey}")
         try:
@@ -48,6 +50,11 @@ class Weather:
         rain = dr.get("rain")
         snow = dr.get("snow")
         sys = dr.get("sys")
+        coord = dr.get("coord")
+
+        if coord is not None:
+            self.lon = coord.get("lon")
+            self.lat = coord.get("lat")
 
         if weather is not None:
             self.w_type = []
@@ -84,6 +91,8 @@ class Weather:
             self.snow = snow.get("3h")
 
         if sys is not None:
+            self.cityid = sys.get("id")
+            self.cityname = sys.get("name")
             self.sunrise = sys.get("sunrise")
             self.sunset = sys.get("sunset")
 
