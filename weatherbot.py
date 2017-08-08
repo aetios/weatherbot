@@ -22,13 +22,13 @@ def start(bot, update):
                           "You can also send a location.")
 
 
-def gen_w_string(currentweather):
-    w_string = ", ".join(list(currentweather.w_desc))
+def generate_w_string(currentweather):
+    w_string = ", ".join(currentweather.w_desc)
     return w_string.capitalize()
 
 
 def response_1day(bot, update, query, currentweather):
-    w_string = gen_w_string(currentweather)
+    w_string = generate_w_string(currentweather)
     w_temp = str(round(currentweather.temp - 273.15, 1))
 
     bot.send_message(chat_id=update.message.chat_id,
