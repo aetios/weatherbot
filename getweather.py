@@ -13,7 +13,6 @@ class API:
         self.success = None
 
     def get_weather(self, query):
-
         apiresp = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={query}&appid={self.apikey}")
         try:
@@ -36,6 +35,19 @@ class API:
             else:
                 self.success = True
                 return Forecast(apiresp.json())
+        except StatusCodeException:
+            self.success = False
+
+    def get_location(self, lat, lon):
+        apiresp = requests.get(
+            f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.apikey}")
+        try:
+            if apiresp.status_code != 200:
+                raise StatusCodeException("status code not 200. Status code:", apiresp.status_code,
+                                          "message:", apiresp.text)
+            else:
+                self.success = True
+                return Weather(apiresp.json())
         except StatusCodeException:
             self.success = False
 
